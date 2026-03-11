@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Leaderful — Grow the Leader Within You</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#09160a;--bg2:#0d1e0e;--forest:#1a4a1b;--moss:#2d6930;
+  --mint:#00e5a0;--gold:#f0a500;--cream:#f0ede4;--mist:#c4f2e3;
+  --dim:#6b9970;--card:#0f1e10;--cardb:#1c3a1e;
+  --red:#e05252;--blue:#4a9eff;--purple:#a78bfa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;overflow-x:hidden}
+
+/* SPLASH */
+#splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;position:relative;overflow:hidden;text-align:center}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:pulse 6s ease-in-out infinite}
+.orb1{width:400px;height:400px;background:rgba(0,229,160,0.07);top:-100px;right:-100px}
+.orb2{width:300px;height:300px;background:rgba(240,165,0,0.05);bottom:50px;left:-80px;animation-delay:3s}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.1);opacity:1}}
+.s-logo{font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,5rem);font-weight:900;color:var(--cream);letter-spacing:-.02em;line-height:1;margin-bottom:.4rem;animation:fadeUp .8s ease both}
+.s-logo span{color:var(--mint);font-style:italic}
+.s-tag{font-size:clamp(.8rem,3vw,.95rem);color:var(--dim);letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:2.5rem;animation:fadeUp .8s ease .15s both}
+.s-cta{display:inline-block;background:var(--mint);color:var(--bg);padding:1rem 2.5rem;border-radius:3rem;font-weight:700;font-size:1rem;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;animation:fadeUp .8s ease .3s both;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(0,229,160,.25)}
+.s-cta:hover{transform:translateY(-2px);box-shadow:0 0 45px rgba(0,229,160,.4)}
+.s-profiles{display:flex;gap:.75rem;margin-top:2.5rem;animation:fadeUp .8s ease .45s both;flex-wrap:wrap;justify-content:center}
+.ppill{display:flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid var(--cardb);border-radius:2rem;padding:.4rem .85rem .4rem .4rem;cursor:pointer;transition:border-color .2s,transform .2s}
+.ppill:hover{border-color:rgba(0,229,160,.3);transform:translateY(-2px)}
+.pav-s{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;font-family:'Playfair Display',serif}
+.p-name{font-size:.78rem;font-weight:700;color:var(--cream);text-align:left}
+.p-loc{font-size:.63rem;color:var(--dim);text-align:left}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* APP */
+#app{display:none;max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg)}
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.4rem .3rem;font-size:.7rem;font-weight:700;color:var(--mist);font-family:'DM Mono',monospace;background:var(--bg);position:sticky;top:0;z-index:100}
+.screen{display:none;min-height:calc(100vh - 130px);padding-bottom:5.5rem;animation:screenIn .25s ease both}
+.screen.active{display:block}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(9,22,10,.97);backdrop-filter:blur(20px);border-top:1px solid var(--cardb);display:flex;justify-content:space-around;padding:.55rem 0 .8rem;z-index:200}
+.nb{display:flex;flex-direction:column;align-items:center;gap:.2rem;font-size:.52rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s;padding:.2rem .5rem}
+.nb.active{color:var(--mint)}
+.ni{font-size:1.2rem}
+
+/* Shared */
+.sh{padding:1.1rem 1.4rem .8rem;border-bottom:1px solid var(--cardb);background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%)}
+.sh-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--cream);line-height:1.2}
+.sh-title em{color:var(--mint);font-style:italic}
+.sh-sub{font-size:.72rem;color:var(--dim);margin-top:.2rem}
+.slabel{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);padding:.9rem 1.4rem .4rem;display:flex;align-items:center;gap:.5rem}
+.slabel::before{content:'';width:14px;height:1px;background:var(--mint)}
+.card{margin:0 1rem .65rem;background:var(--card);border:1px solid var(--cardb);border-radius:1rem;padding:1rem 1.1rem;transition:border-color .2s}
+.card:hover{border-color:rgba(0,229,160,.15)}
+.badge{display:inline-flex;align-items:center;padding:.18rem .6rem;border-radius:1rem;font-size:.62rem;font-weight:700}
+.bd{background:rgba(0,229,160,.12);color:var(--mint)}
+.bp{background:rgba(240,165,0,.12);color:var(--gold)}
+.bn{background:rgba(224,82,82,.12);color:var(--red)}
+.bm{background:rgba(255,255,255,.05);color:var(--dim)}
+.sk-row{margin-bottom:.75rem}
+.sk-top{display:flex;justify-content:space-between;font-size:.73rem;margin-bottom:.28rem}
+.sk-top .sn{color:var(--cream);font-weight:500}
+.sk-top .sv{color:var(--mint);font-weight:700;font-family:'DM Mono',monospace}
+.sk-track{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.sk-fill{height:100%;border-radius:3px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:var(--bg);flex-shrink:0}
+.tag{display:inline-block;background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.15);color:var(--mint);padding:.18rem .6rem;border-radius:1rem;font-size:.63rem;font-weight:600}
+.fbtn{width:100%;padding:.8rem;border-radius:.75rem;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;border:none;transition:transform .15s}
+.fbtn:active{transform:scale(.98)}
+.fprimary{background:var(--mint);color:var(--bg)}
+.fghost{background:transparent;color:var(--mint);border:1px solid rgba(0,229,160,.25)}
+
+/* HOME */
+.hgreet{padding:1rem 1.4rem .5rem}
+.hgreet .gs{font-size:.8rem;color:var(--dim)}
+.hgreet h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:900;color:var(--cream);line-height:1.2;margin-top:.1rem}
+.hgreet h2 em{color:var(--mint);font-style:italic}
+.streak-c{margin:0 1rem;background:linear-gradient(135deg,var(--forest),#102511);border:1px solid rgba(0,229,160,.2);border-radius:1rem;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.sl-left .lbl{font-size:.68rem;font-weight:700;color:var(--mist);margin-bottom:.2rem}
+.sl-left .num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--mint);line-height:1}
+.sl-left .sub{font-size:.63rem;color:var(--dim);margin-top:.1rem}
+.sdots{display:flex;gap:.3rem}
+.sd{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.57rem;font-weight:700}
+.sdd{background:var(--mint);color:var(--bg)}
+.sdt{background:rgba(240,165,0,.15);border:1.5px solid var(--gold);color:var(--gold)}
+.sde{background:rgba(255,255,255,.04);border:1px solid var(--cardb);color:var(--cardb)}
+.stats-r{display:flex;gap:.65rem;margin:0 1rem}
+.stm{flex:1;background:var(--card);border:1px solid var(--cardb);border-radius:.875rem;padding:.8rem .6rem}
+.stm .si{font-size:1.1rem;margin-bottom:.25rem}
+.stm .sv{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--mint);line-height:1}
+.stm .sl{font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem}
+.jsnap{margin:0 1rem .65rem;background:linear-gradient(135deg,rgba(27,74,27,.35),rgba(0,229,160,.04));border:1px solid rgba(0,229,160,.18);border-radius:1rem;padding:1rem 1.1rem}
+.jsnap .jlbl{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.jsnap .jp{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--cream);line-height:1.55;margin-bottom:.75rem}
+.jwrite{background:rgba(240,165,0,.1);color:var(--gold);border:1px solid rgba(240,165,0,.2);padding:.45rem 1rem;border-radius:1rem;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* JOURNAL */
+.jpfull{margin:0 1rem .65rem;background:linear-gradient(135deg,rgba(27,74,27,.4),rgba(0,229,160,.05));border:1px solid rgba(0,229,160,.2);border-radius:1rem;padding:1.1rem}
+.jpfull .jpl{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.jpfull .jpt{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--cream);line-height:1.6;margin-bottom:.85rem}
+.ecard{margin:0 1rem .6rem;background:var(--card);border:1px solid var(--cardb);border-radius:1rem;padding:.9rem 1rem}
+.edate{font-size:.62rem;color:var(--dim);margin-bottom:.4rem;font-family:'DM Mono',monospace}
+.etext{font-size:.82rem;color:var(--mist);line-height:1.65;font-style:italic;margin-bottom:.5rem}
+.etags{display:flex;gap:.4rem;flex-wrap:wrap}
+
+/* COMMUNITY */
+.thcard{margin:0 1rem .65rem;background:var(--card);border:1px solid var(--cardb);border-radius:1rem;padding:.9rem 1rem}
+.th-head{display:flex;gap:.65rem;align-items:center;margin-bottom:.55rem}
+.thav{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.thtitle{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:700;color:var(--cream);margin-bottom:.3rem;line-height:1.35}
+.thprev{font-size:.75rem;color:var(--dim);line-height:1.5;margin-bottom:.5rem}
+.thtags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.55rem}
+.thstats{display:flex;gap:1rem;font-size:.7rem;color:var(--dim)}
+
+/* READINGS */
+.rcard{margin:0 1rem .65rem;background:var(--card);border:1px solid var(--cardb);border-radius:1rem;padding:.9rem 1rem;position:relative;overflow:hidden}
+.raccent{position:absolute;top:0;left:0;right:0;height:3px}
+.rreg{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.rtitle{font-family:'Playfair Display',serif;font-size:.94rem;font-weight:700;color:var(--cream);margin-bottom:.25rem;line-height:1.4}
+.rauthor{font-size:.72rem;color:var(--dim);margin-bottom:.6rem}
+.rfoot{display:flex;justify-content:space-between;align-items:center}
+.rlang{font-size:.65rem;color:var(--dim)}
+.rbtn{font-size:.72rem;font-weight:600;color:var(--mint);background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.18);padding:.28rem .75rem;border-radius:1rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+.pbar{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:.6rem}
+.pfill{height:100%;border-radius:2px}
+
+/* PROFILE */
+.phero{padding:1.5rem 1.4rem 1.1rem;display:flex;flex-direction:column;align-items:center;text-align:center;border-bottom:1px solid var(--cardb)}
+.avxl{width:78px;height:78px;font-size:2.1rem;border:2px solid rgba(0,229,160,.3);margin-bottom:.85rem}
+.pname{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--cream)}
+.pjoined{font-size:.7rem;color:var(--dim);margin:.2rem 0 .6rem}
+.pbio{font-size:.82rem;color:var(--mist);font-style:italic;line-height:1.65;margin-bottom:.85rem;max-width:300px}
+.pstats{display:flex;gap:1.5rem;margin-bottom:1rem}
+.pstat .psv{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--mint)}
+.pstat .psl{font-size:.6rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.pidtags{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+.lid{margin:0 1rem .65rem;background:var(--card);border:1px solid var(--cardb);border-radius:1rem;padding:1rem 1.1rem}
+.lid-top{display:flex;justify-content:space-between;margin-bottom:.5rem}
+.lid-desc{font-size:.75rem;color:var(--dim);line-height:1.55;margin-bottom:.7rem}
+.lid-desc em{color:var(--cream);font-style:normal;font-weight:600}
+.lid-track{height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:.35rem}
+.lid-fill{height:100%;background:linear-gradient(90deg,var(--forest),var(--mint));border-radius:3px}
+.lid-lbl{display:flex;justify-content:space-between;font-size:.6rem;color:var(--dim)}
+.bgrid{display:flex;flex-wrap:wrap;gap:.5rem}
+
+/* MODAL */
+#jmodal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center}
+#jmodal.open{display:flex}
+.msheet{background:var(--bg2);border:1px solid var(--cardb);border-radius:1.5rem 1.5rem 0 0;padding:1.5rem 1.4rem 2rem;width:100%;max-width:430px;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.mtitle{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream)}
+.mclose{background:none;border:none;color:var(--dim);font-size:1.3rem;cursor:pointer}
+.jta{width:100%;min-height:140px;background:var(--card);border:1px solid var(--cardb);border-radius:.875rem;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.6;padding:.85rem;resize:none;margin-bottom:1rem}
+.jta:focus{outline:none;border-color:rgba(0,229,160,.3)}
+.jta::placeholder{color:var(--dim)}
+
+/* TOAST */
+#toast{position:fixed;bottom:6rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--mint);color:var(--bg);padding:.65rem 1.5rem;border-radius:2rem;font-weight:700;font-size:.85rem;opacity:0;transition:all .3s ease;z-index:400;white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="s-logo">Leader<span>ful</span></div>
+  <div class="s-tag">Grow the leader within you</div>
+  <button class="s-cta" onclick="enterApp('yuna')">Explore the App →</button>
+  <div class="s-profiles">
+    <div class="ppill" onclick="enterApp('yuna')">
+      <div class="pav-s" style="background:linear-gradient(135deg,#1a4a1b,#00e5a0);color:#09160a">Y</div>
+      <div><div class="p-name">Yuna Kim</div><div class="p-loc">Seoul · Boston, 17</div></div>
+    </div>
+    <div class="ppill" onclick="enterApp('deshawn')">
+      <div class="pav-s" style="background:linear-gradient(135deg,#3a2000,#f0a500);color:#09160a">D</div>
+      <div><div class="p-name">DeShawn Lewis</div><div class="p-loc">Atlanta, GA, 16</div></div>
+    </div>
+    <div class="ppill" onclick="enterApp('amara')">
+      <div class="pav-s" style="background:linear-gradient(135deg,#2a0035,#a78bfa);color:#f0ede4">A</div>
+      <div><div class="p-name">Amara Osei</div><div class="p-loc">London, UK, 15</div></div>
+    </div>
+  </div>
+  <div style="margin-top:2rem;font-size:.73rem;color:var(--dim)">An educational leadership app for adolescents (14–18) · Claudia Jo, Founder</div>
+</div>
+
+<div id="app">
+  <div class="sbar">
+    <span>9:41</span>
+    <span id="sbar-name" style="letter-spacing:.1em;font-size:.63rem;color:var(--mint)">LEADERFUL</span>
+    <span>●●● 🔋</span>
+  </div>
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen active">
+    <div class="hgreet">
+      <div class="gs">Good morning,</div>
+      <h2 id="h-name">Welcome back, <em>Yuna</em> 👋</h2>
+    </div>
+    <div style="padding:.5rem 0">
+      <div class="streak-c">
+        <div class="sl-left">
+          <div class="lbl">🔥 Streak</div>
+          <div class="num" id="h-streak">5</div>
+          <div class="sub">days in a row</div>
+        </div>
+        <div class="sdots" id="h-dots"></div>
+      </div>
+    </div>
+    <div class="slabel">Progress</div>
+    <div class="stats-r">
+      <div class="stm"><div class="si">🏆</div><div class="sv" id="h-ch">12</div><div class="sl">Challenges</div></div>
+      <div class="stm"><div class="si">📖</div><div class="sv" id="h-rd">8</div><div class="sl">Readings</div></div>
+      <div class="stm"><div class="si">📓</div><div class="sv" id="h-jn">6</div><div class="sl">Journals</div></div>
+    </div>
+    <div class="slabel">Today's Challenge</div>
+    <div class="card">
+      <div style="display:flex;gap:.85rem;align-items:flex-start">
+        <div id="h-ch-ico" style="width:46px;height:46px;border-radius:.875rem;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:rgba(0,229,160,.1)">🤖</div>
+        <div style="flex:1">
+          <div style="font-size:.88rem;font-weight:700;color:var(--cream);margin-bottom:.25rem" id="h-ch-title">Ethical AI Argument</div>
+          <div style="font-size:.73rem;color:var(--dim);line-height:1.5;margin-bottom:.5rem" id="h-ch-desc">Should AI grade student essays?</div>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap"><span class="badge bp" id="h-ch-badge">In Progress</span><span class="badge bm" id="h-ch-skill">Argumentation</span></div>
+        </div>
+      </div>
+      <button class="fbtn fprimary" style="margin-top:.85rem">Continue Challenge →</button>
+    </div>
+    <div class="slabel">Today's Journal Prompt</div>
+    <div class="jsnap">
+      <div class="jlbl">✍️ 5-min reflection</div>
+      <div class="jp" id="h-jp">"What part of your cultural identity makes you a better thinker?"</div>
+      <button class="jwrite" onclick="openModal()">Write Now →</button>
+    </div>
+    <div class="slabel">Recent Activity</div>
+    <div class="card" id="h-activity" style="margin-bottom:1rem"></div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div id="screen-portfolio" class="screen">
+    <div style="display:flex;align-items:center;gap:.9rem;padding:1rem 1.4rem;border-bottom:1px solid var(--cardb)">
+      <div class="av" id="p-av" style="width:52px;height:52px;font-size:1.4rem;background:linear-gradient(135deg,#1a4a1b,#00e5a0)">Y</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--cream)" id="p-name">Yuna Kim</div>
+        <div style="font-size:.72rem;color:var(--dim);margin-top:.1rem" id="p-sub">Grade 11 · 5-day streak</div>
+        <div style="margin-top:.3rem"><span class="tag" id="p-tag">Quiet Leader</span></div>
+      </div>
+    </div>
+    <div class="slabel">Skill Growth</div>
+    <div class="card">
+      <div class="sk-row"><div class="sk-top"><span class="sn">Critical Thinking</span><span class="sv" id="sv1">74%</span></div><div class="sk-track"><div class="sk-fill" id="sf1" style="width:0%;background:linear-gradient(90deg,var(--forest),var(--mint))"></div></div></div>
+      <div class="sk-row"><div class="sk-top"><span class="sn">Cultural Identity</span><span class="sv" id="sv2">82%</span></div><div class="sk-track"><div class="sk-fill" id="sf2" style="width:0%;background:linear-gradient(90deg,var(--forest),var(--mint))"></div></div></div>
+      <div class="sk-row"><div class="sk-top"><span class="sn">Public Speaking</span><span class="sv" id="sv3">61%</span></div><div class="sk-track"><div class="sk-fill" id="sf3" style="width:0%;background:linear-gradient(90deg,var(--gold),#f5c542)"></div></div></div>
+      <div class="sk-row"><div class="sk-top"><span class="sn">Argumentation</span><span class="sv" id="sv4">55%</span></div><div class="sk-track"><div class="sk-fill" id="sf4" style="width:0%;background:linear-gradient(90deg,#c0392b,var(--red))"></div></div></div>
+      <div class="sk-row" style="margin-bottom:0"><div class="sk-top"><span class="sn">Self-Reflection</span><span class="sv" id="sv5">70%</span></div><div class="sk-track"><div class="sk-fill" id="sf5" style="width:0%;background:linear-gradient(90deg,#7c3aed,var(--purple))"></div></div></div>
+    </div>
+    <div class="slabel">Challenges</div>
+    <div id="p-challenges"></div>
+  </div>
+
+  <!-- JOURNAL -->
+  <div id="screen-journal" class="screen">
+    <div class="sh"><div class="sh-title">My <em>Journal</em></div><div class="sh-sub" id="j-sub">6 entries · building identity</div></div>
+    <div class="slabel">Today's Prompt</div>
+    <div class="jpfull">
+      <div class="jpl">✍️ Today's Reflection</div>
+      <div class="jpt" id="j-prompt">"What part of your cultural identity makes you a better thinker?"</div>
+      <button class="fbtn fprimary" onclick="openModal()">+ Write Today's Entry</button>
+    </div>
+    <div class="slabel">Past Entries</div>
+    <div id="j-entries"></div>
+    <div class="card" style="background:rgba(27,74,27,.15);border-color:rgba(0,229,160,.08);margin-bottom:1rem">
+      <div style="font-size:.65rem;font-weight:700;color:var(--mint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">📊 Research Note</div>
+      <div style="font-size:.75rem;color:var(--dim);line-height:1.6">Structured reflection accelerates leadership identity development (DeRue et al., 2012). Your entries build something real.</div>
+    </div>
+  </div>
+
+  <!-- COMMUNITY -->
+  <div id="screen-community" class="screen">
+    <div class="sh"><div class="sh-title">Discussion <em>Hub</em></div><div class="sh-sub">US · South Korea · UK</div></div>
+    <div style="padding:.75rem 1rem 0"><button class="fbtn fprimary">+ Start a Discussion</button></div>
+    <div class="slabel">Recent Threads</div>
+    <div id="c-threads"></div>
+  </div>
+
+  <!-- READINGS -->
+  <div id="screen-readings" class="screen">
+    <div class="sh"><div class="sh-title">Cultural <em>Readings</em></div><div class="sh-sub">Leaders who look like you · 22 languages</div></div>
+    <div class="slabel">Continue Reading</div>
+    <div id="r-cont"></div>
+    <div class="slabel">Explore</div>
+    <div id="r-list"></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="screen-profile" class="screen">
+    <div class="phero">
+      <div class="av avxl" id="pr-av" style="background:linear-gradient(135deg,#1a4a1b,#00e5a0)">Y</div>
+      <div class="pname" id="pr-name">Yuna Kim</div>
+      <div class="pjoined" id="pr-joined">Member since Sep 2024 · Grade 11</div>
+      <div class="pbio" id="pr-bio">"I lead from in-between."</div>
+      <div class="pstats">
+        <div class="pstat"><div class="psv" id="pr-ch">12</div><div class="psl">Challenges</div></div>
+        <div class="pstat"><div class="psv" id="pr-rd">8</div><div class="psl">Readings</div></div>
+        <div class="pstat"><div class="psv" id="pr-jn">6</div><div class="psl">Journals</div></div>
+      </div>
+      <div class="pidtags" id="pr-tags"></div>
+    </div>
+    <div class="slabel">Leadership Identity Stage</div>
+    <div class="lid">
+      <div class="lid-top">
+        <span style="font-size:.78rem;font-weight:700;color:var(--cream)" id="pr-stage">LID Stage 3→4</span>
+        <span style="font-size:.72rem;color:var(--mint)">In Transition</span>
+      </div>
+      <div class="lid-desc" id="pr-lid-desc">Moving from <em>Leader Identified</em> to <em>Leadership Differentiated</em>.</div>
+      <div class="lid-track"><div class="lid-fill" id="pr-lid-fill" style="width:58%"></div></div>
+      <div class="lid-lbl"><span>Stage 1: Awareness</span><span>Stage 6: Integration</span></div>
+    </div>
+    <div class="slabel">Badges Earned</div>
+    <div class="card" style="margin-bottom:1rem"><div class="bgrid" id="pr-badges"></div></div>
+  </div>
+
+  <nav class="bnav">
+    <button class="nb active" id="nb-home" onclick="go('home')"><span class="ni">🏠</span>Home</button>
+    <button class="nb" id="nb-portfolio" onclick="go('portfolio')"><span class="ni">🏆</span>Portfolio</button>
+    <button class="nb" id="nb-journal" onclick="go('journal')"><span class="ni">📓</span>Journal</button>
+    <button class="nb" id="nb-community" onclick="go('community')"><span class="ni">💬</span>Hub</button>
+    <button class="nb" id="nb-readings" onclick="go('readings')"><span class="ni">📚</span>Read</button>
+    <button class="nb" id="nb-profile" onclick="go('profile')"><span class="ni">👤</span>Profile</button>
+  </nav>
+</div>
+
+<div id="jmodal">
+  <div class="msheet">
+    <div class="mhdr"><div class="mtitle">Today's Reflection</div><button class="mclose" onclick="closeModal()">✕</button></div>
+    <div style="font-size:.8rem;color:var(--dim);font-style:italic;margin-bottom:.75rem;line-height:1.55" id="m-prompt"></div>
+    <textarea class="jta" id="j-input" placeholder="Start writing — there are no wrong answers here…"></textarea>
+    <button class="fbtn fprimary" onclick="saveEntry()">Save Entry ✓</button>
+  </div>
+</div>
+<div id="toast">Entry saved! ✓</div>
+
+<script>
+const P={
+  yuna:{name:'Yuna Kim',grade:'Grade 11',tag:'Quiet Leader',streak:5,
+    avBg:'linear-gradient(135deg,#1a4a1b,#00e5a0)',avC:'#09160a',avL:'Y',
+    stats:{ch:12,rd:8,jn:6},skills:[74,82,61,55,70],
+    joined:'Member since Sep 2024 · Grade 11',
+    bio:'"I lead from in-between. Between two languages, two countries, two definitions of success. That\'s not a weakness — it\'s my vantage point."',
+    tags:['Korean-American','Bilingual','Quiet Leader','First-Gen'],
+    lidStage:'LID Stage 3 → 4',
+    lidDesc:'Moving from <em>Leader Identified</em> to <em>Leadership Differentiated</em> — discovering that leadership comes from anywhere, not just the person with the title.',
+    lidW:'58%',
+    badges:[{l:'🌏 Cultural Explorer',d:1},{l:'🗣️ First Voice',d:1},{l:'💬 Discussion Starter',d:1},{l:'📓 Reflective Learner',d:1},{l:'🧠 Critical Thinker',d:0},{l:'🤖 AI Literate',d:0}],
+    jp:'"What part of your cultural identity makes you a better thinker — not despite it, but because of it?"',
+    tch:{ico:'🤖',bg:'rgba(0,229,160,.1)',title:'Ethical AI Argument',desc:'Should AI grade student essays? Build your argument and anticipate the counterargument.',badge:'In Progress',bc:'bp',skill:'Argumentation'},
+    activity:[{c:'mint',t:'Completed: <strong>Lead a 5-min Discussion</strong>',s:'2 days ago'},{c:'gold',t:'🏅 <strong>Badge earned:</strong> Cultural Explorer',s:'3 days ago'},{c:'mint',t:'Read: <strong>Ryu Gwan-sun & Quiet Courage</strong>',s:'4 days ago'}],
+    entries:[{d:'Day 4 · March 10',t:'"I used to think my bilingualism made me slower. Today I realized — I wasn\'t slow. I was processing two layers of meaning at once. That might be exactly what leadership needs."',tags:['Cultural Identity','Self-Awareness']},{d:'Day 3 · March 9',t:'"After reading about Ryu Gwan-sun, I felt something shift. She didn\'t have a stage or a title. She just acted from what she believed."',tags:['Cultural Mirror','Identity']},{d:'Day 1 · March 7',t:'"Today I had to introduce myself as a leader for the first time. My voice shook. But I did it."',tags:['Public Speaking','Confidence']}],
+    chs:[{ico:'🗣️',bg:'rgba(0,229,160,.1)',t:'Lead a 5-Minute Discussion',d:'Facilitated a peer discussion on AI in education.',badge:'✓ Done',bc:'bd',skill:'Public Speaking',cta:null},{ico:'📖',bg:'rgba(27,77,28,.3)',t:'Korean Women Leaders Reading',d:'Read about Ryu Gwan-sun. Reflected on cultural pride.',badge:'✓ Done',bc:'bd',skill:'Identity',cta:null},{ico:'🤖',bg:'rgba(240,165,0,.1)',t:'Ethical AI Argument',d:'Building argument on AI grading. Draft in progress.',badge:'In Progress',bc:'bp',skill:'Argumentation',cta:'Continue →'},{ico:'🌐',bg:'rgba(224,82,82,.09)',t:'Indigenous Leadership Framework',d:'Explore collective leadership from Haudenosaunee tradition.',badge:'New',bc:'bn',skill:'Critical Thinking',cta:'Start Challenge'}]
+  },
+  deshawn:{name:'DeShawn Lewis',grade:'Grade 10',tag:'Community Leader',streak:3,
+    avBg:'linear-gradient(135deg,#3a2000,#f0a500)',avC:'#09160a',avL:'D',
+    stats:{ch:9,rd:5,jn:4},skills:[68,58,77,71,64],
+    joined:'Member since Oct 2024 · Grade 10',
+    bio:'"My grandma leads our whole neighborhood without a title, salary, or TED talk. That\'s the kind of leader I want to be."',
+    tags:['Black American','Atlanta','Community-First','Oral Tradition'],
+    lidStage:'LID Stage 2 → 3',
+    lidDesc:'Moving from <em>Leader Awareness</em> to <em>Leader Identified</em> — beginning to recognize leadership in people beyond official titles, including in himself.',
+    lidW:'38%',
+    badges:[{l:'💬 Discussion Starter',d:1},{l:'🤝 Community Voice',d:1},{l:'🌏 Cultural Explorer',d:0},{l:'📓 Reflective Learner',d:0}],
+    jp:'"Think of someone in your community who leads without a title. What do they do that a CEO doesn\'t?"',
+    tch:{ico:'🎤',bg:'rgba(240,165,0,.1)',title:'Community Speech Challenge',desc:'Give a 2-minute speech about a local issue you care about. Record yourself.',badge:'New',bc:'bn',skill:'Public Speaking'},
+    activity:[{c:'mint',t:'Completed: <strong>Ubuntu Leadership Reading</strong>',s:'Yesterday'},{c:'gold',t:'💬 <strong>Badge earned:</strong> Community Voice',s:'5 days ago'},{c:'mint',t:'Started: <strong>Steel-Man Argument Challenge</strong>',s:'6 days ago'}],
+    entries:[{d:'Day 4 · March 9',t:'"I wrote about my grandma today. She doesn\'t give speeches. She shows up. She calls people by name. She remembers. That\'s leadership."',tags:['Community','Identity']},{d:'Day 2 · March 7',t:'"The Ubuntu reading hit different. I am because we are. In my neighborhood, nobody makes it alone."',tags:['Ubuntu','Cultural Mirror']}],
+    chs:[{ico:'📖',bg:'rgba(27,77,28,.3)',t:'Ubuntu: I Am Because We Are',d:'Read and reflect on collective leadership in West African tradition.',badge:'✓ Done',bc:'bd',skill:'Cultural Identity',cta:null},{ico:'🤝',bg:'rgba(240,165,0,.1)',t:'Steel-Man Argument',d:'Make the strongest possible case for a position you disagree with.',badge:'In Progress',bc:'bp',skill:'Argumentation',cta:'Continue →'},{ico:'🎤',bg:'rgba(224,82,82,.09)',t:'Community Speech Challenge',d:'Give a 2-min speech about a local issue you care about.',badge:'New',bc:'bn',skill:'Public Speaking',cta:'Start Challenge'}]
+  },
+  amara:{name:'Amara Osei',grade:'Year 10',tag:'Bridge Builder',streak:7,
+    avBg:'linear-gradient(135deg,#2a0035,#a78bfa)',avC:'#f0ede4',avL:'A',
+    stats:{ch:15,rd:11,jn:9},skills:[81,76,69,72,85],
+    joined:'Member since Aug 2024 · Year 10',
+    bio:'"I exist between cultures — Ghanaian at home, British at school. Leaderful helped me see that\'s not a problem. It\'s a superpower."',
+    tags:['Ghanaian-British','Multilingual','Diaspora','Bridge Builder'],
+    lidStage:'LID Stage 4 → 5',
+    lidDesc:'Moving from <em>Leadership Differentiated</em> to <em>Generativity</em> — actively mentoring peers and thinking about collective impact beyond herself.',
+    lidW:'74%',
+    badges:[{l:'🌏 Cultural Explorer',d:1},{l:'🗣️ First Voice',d:1},{l:'💬 Discussion Starter',d:1},{l:'📓 Reflective Learner',d:1},{l:'🧠 Critical Thinker',d:1},{l:'🤝 Peer Mentor',d:1},{l:'🤖 AI Literate',d:0}],
+    jp:'"When did you last help someone else find their voice? What did you do, and why did it matter?"',
+    tch:{ico:'🌍',bg:'rgba(167,139,250,.1)',title:'Cross-Cultural Leadership Compare',desc:'Compare Ghanaian chieftaincy and British parliamentary leadership. What does each value?',badge:'In Progress',bc:'bp',skill:'Critical Thinking'},
+    activity:[{c:'mint',t:'Completed: <strong>Peer Mentorship Challenge</strong>',s:'1 day ago'},{c:'gold',t:'🏅 <strong>Badge earned:</strong> Peer Mentor',s:'2 days ago'},{c:'mint',t:'Read: <strong>Ghanaian Queen Mothers & Governance</strong>',s:'3 days ago'}],
+    entries:[{d:'Day 9 · March 10',t:'"I helped Priya prep her speech today. When she finished she said \'I didn\'t know I could do that.\' I think that\'s the most powerful thing I\'ve ever done."',tags:['Peer Mentorship','Generativity']},{d:'Day 7 · March 8',t:'"Reading about Ghanaian Queen Mothers — the Ohemaa — I finally understand why I\'ve always felt more comfortable listening first. That\'s not passivity. That\'s strategy."',tags:['Cultural Mirror','Ghana']}],
+    chs:[{ico:'🤝',bg:'rgba(167,139,250,.1)',t:'Peer Mentorship Challenge',d:'Help a fellow student prepare for their first public speech.',badge:'✓ Done',bc:'bd',skill:'Peer Leadership',cta:null},{ico:'📖',bg:'rgba(27,77,28,.3)',t:'Ghanaian Queen Mothers Reading',d:'Explore governance and the role of the Ohemaa.',badge:'✓ Done',bc:'bd',skill:'Cultural Identity',cta:null},{ico:'🌍',bg:'rgba(167,139,250,.1)',t:'Cross-Cultural Leadership Compare',d:'Compare Ghanaian chieftaincy and British parliamentary leadership.',badge:'In Progress',bc:'bp',skill:'Critical Thinking',cta:'Continue →'},{ico:'🎙️',bg:'rgba(240,165,0,.09)',t:'TEDx-Style 3-Minute Talk',d:'Deliver a short talk on your leadership philosophy for peer feedback.',badge:'New',bc:'bn',skill:'Public Speaking',cta:'Start Challenge'}]
+  }
+};
+
+const READS=[
+  {reg:'East Asia · Korea',rc:'#00e5a0',title:'Ryu Gwan-sun and the Politics of Quiet Courage',auth:'Korean Independence Movement',lang:'한국어 · English · +12 languages',ac:'#00e5a0',prog:65,cont:true},
+  {reg:'Indigenous · Turtle Island',rc:'#f0a500',title:'Seventh Generation: Leadership as Responsibility',auth:'Haudenosaunee Tradition',lang:'14 languages',ac:'#f0a500',prog:0},
+  {reg:'West Africa · Global',rc:'#e05252',title:'Ubuntu: "I Am Because We Are"',auth:'Southern African Philosophy',lang:'18 languages',ac:'#e05252',prog:0},
+  {reg:'Latin America · Chicana',rc:'#a78bfa',title:'Anzaldúa and the Leader Who Lives on the Border',auth:'Borderlands / La Frontera',lang:'10 languages',ac:'#a78bfa',prog:0},
+  {reg:'South Asia',rc:'#4a9eff',title:'Satyagraha: Leading Without Weapons',auth:'Gandhi & Indian Independence Movement',lang:'16 languages',ac:'#4a9eff',prog:0},
+];
+
+const THREADS=[
+  {i:'MJ',ab:'rgba(0,229,160,.15)',ac:'#00e5a0',n:'Minjee J.',ti:'2h ago · Seoul, KR',title:'I never thought I\'d lead in English — here\'s what helped',prev:'My accent isn\'t a weakness. It\'s proof I navigate two worlds at once...',tags:['Speech Anxiety','Multilingual'],r:18,l:42,s:11},
+  {i:'DL',ab:'rgba(240,165,0,.15)',ac:'#f0a500',n:'DeShawn L.',ti:'Yesterday · Atlanta, GA',title:'Leadership in your community vs. what school taught you',prev:'My grandma leads our whole neighborhood without a title, salary, or TED talk...',tags:['Community','Identity'],r:31,l:67,s:24},
+  {i:'AO',ab:'rgba(167,139,250,.15)',ac:'#a78bfa',n:'Amara O.',ti:'3 days ago · London, UK',title:'Being between two cultures taught me to lead from the bridge',prev:'There\'s a kind of intelligence that only comes from never fully belonging...',tags:['Diaspora','Identity'],r:24,l:55,s:18},
+];
+
+let cur='yuna',jcount=6;
+
+function enterApp(k){
+  cur=k; const p=P[k]; jcount=p.stats.jn;
+  // Status
+  document.getElementById('sbar-name').textContent=p.name.toUpperCase();
+  // Home
+  document.getElementById('h-name').innerHTML=`Welcome back, <em>${p.name.split(' ')[0]}</em> 👋`;
+  document.getElementById('h-streak').textContent=p.streak;
+  document.getElementById('h-ch').textContent=p.stats.ch;
+  document.getElementById('h-rd').textContent=p.stats.rd;
+  document.getElementById('h-jn').textContent=p.stats.jn;
+  // Streak dots
+  const days=['M','T','W','T','F','S','S'];
+  document.getElementById('h-dots').innerHTML=days.map((d,i)=>`<div class="sd ${i<p.streak-1?'sdd':i===p.streak-1?'sdt':'sde'}">${d}</div>`).join('');
+  // Challenge
+  const ch=p.tch;
+  document.getElementById('h-ch-ico').textContent=ch.ico;
+  document.getElementById('h-ch-ico').style.background=ch.bg;
+  document.getElementById('h-ch-title').textContent=ch.title;
+  document.getElementById('h-ch-desc').textContent=ch.desc;
+  const b=document.getElementById('h-ch-badge'); b.textContent=ch.badge; b.className='badge '+ch.bc;
+  document.getElementById('h-ch-skill').textContent=ch.skill;
+  document.getElementById('h-jp').textContent=p.jp;
+  document.getElementById('m-prompt').textContent=p.jp;
+  // Activity
+  document.getElementById('h-activity').innerHTML=p.activity.map((a,i)=>`
+    <div style="display:flex;gap:.65rem;align-items:flex-start${i<p.activity.length-1?';padding-bottom:.65rem;border-bottom:1px solid var(--cardb);margin-bottom:.65rem':''}">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--${a.c});margin-top:.38rem;flex-shrink:0"></div>
+      <div><div style="font-size:.8rem;color:var(--cream);line-height:1.4">${a.t}</div><div style="font-size:.68rem;color:var(--dim);margin-top:.1rem">${a.s}</div></div>
+    </div>`).join('');
+  // Portfolio
+  setEl('p-av',null,{style:{background:p.avBg,color:p.avC},text:p.avL});
+  document.getElementById('p-av').style.background=p.avBg;
+  document.getElementById('p-av').style.color=p.avC;
+  document.getElementById('p-av').textContent=p.avL;
+  document.getElementById('p-name').textContent=p.name;
+  document.getElementById('p-sub').textContent=`${p.grade} · ${p.streak}-day streak · ${p.stats.ch} challenges`;
+  document.getElementById('p-tag').textContent=p.tag;
+  ['1','2','3','4','5'].forEach((n,i)=>{
+    document.getElementById('sv'+n).textContent=p.skills[i]+'%';
+    setTimeout(()=>{document.getElementById('sf'+n).style.width=p.skills[i]+'%'},300+i*80);
+  });
+  document.getElementById('p-challenges').innerHTML=p.chs.map(c=>`
+    <div class="card"><div style="display:flex;gap:.8rem;align-items:flex-start">
+      <div style="width:40px;height:40px;border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;background:${c.bg}">${c.ico}</div>
+      <div style="flex:1">
+        <div style="font-size:.85rem;font-weight:700;color:var(--cream);margin-bottom:.25rem">${c.t}</div>
+        <div style="font-size:.72rem;color:var(--dim);line-height:1.5;margin-bottom:.4rem">${c.d}</div>
+        <div style="display:flex;gap:.4rem"><span class="badge ${c.bc}">${c.badge}</span><span class="badge bm">${c.skill}</span></div>
+      </div></div>
+      ${c.cta?`<button class="fbtn ${c.bc==='bn'?'fprimary':'fghost'}" style="margin-top:.7rem">${c.cta}</button>`:''}
+    </div>`).join('');
+  // Journal
+  document.getElementById('j-sub').textContent=`${p.stats.jn} entries · building identity`;
+  document.getElementById('j-prompt').textContent=p.jp;
+  document.getElementById('m-prompt').textContent=p.jp;
+  renderEntries(p.entries);
+  // Profile
+  document.getElementById('pr-av').style.background=p.avBg;
+  document.getElementById('pr-av').style.color=p.avC;
+  document.getElementById('pr-av').textContent=p.avL;
+  document.getElementById('pr-name').textContent=p.name;
+  document.getElementById('pr-joined').textContent=p.joined;
+  document.getElementById('pr-bio').textContent=p.bio;
+  document.getElementById('pr-ch').textContent=p.stats.ch;
+  document.getElementById('pr-rd').textContent=p.stats.rd;
+  document.getElementById('pr-jn').textContent=p.stats.jn;
+  document.getElementById('pr-tags').innerHTML=p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+  document.getElementById('pr-stage').textContent=p.lidStage;
+  document.getElementById('pr-lid-desc').innerHTML=p.lidDesc;
+  document.getElementById('pr-lid-fill').style.width=p.lidW;
+  document.getElementById('pr-badges').innerHTML=p.badges.map(b=>`<span class="badge ${b.d?'bd':'bm'}">${b.l}${b.d?'':' — locked'}</span>`).join('');
+  // Community & Readings
+  renderThreads(k); renderReadings();
+  document.getElementById('splash').style.display='none';
+  document.getElementById('app').style.display='block';
+  go('home');
+}
+
+function renderEntries(entries){
+  document.getElementById('j-entries').innerHTML=entries.map(e=>`
+    <div class="ecard"><div class="edate">${e.d}</div><div class="etext">${e.t}</div>
+    <div class="etags">${e.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`).join('');
+}
+
+function renderThreads(k){
+  const me=P[k];
+  const myT={i:me.avL,ab:me.avBg,ac:me.avC||'#00e5a0',n:'You ('+me.name.split(' ')[0]+')',ti:'4 days ago · Your thread',
+    title:k==='yuna'?'What Ryu Gwan-sun taught me about leading quietly':k==='deshawn'?'How my grandma taught me what leadership really means':'Being between two cultures taught me to lead from the bridge',
+    prev:k==='yuna'?"I've been thinking about what it means to lead without being loud...":k==='deshawn'?"My grandma leads our neighborhood without a title or salary...":"There's a kind of intelligence that only comes from never fully belonging...",
+    tags:k==='yuna'?['Cultural Mirror','Korean']:k==='deshawn'?['Community','Atlanta']:['Diaspora','UK'],r:9,l:22,s:7};
+  const others=THREADS.filter(t=>t.i!==me.avL).slice(0,2);
+  [myT,...others].forEach(t=>{
+    document.getElementById('c-threads').innerHTML+= `
+    <div class="thcard"><div class="th-head">
+      <div class="thav" style="background:${t.ab};color:${t.ac}">${t.i}</div>
+      <div><div style="font-size:.8rem;font-weight:700;color:var(--cream)">${t.n}</div><div style="font-size:.65rem;color:var(--dim)">${t.ti}</div></div>
+    </div>
+    <div class="thtitle">${t.title}</div><div class="thprev">${t.prev}</div>
+    <div class="thtags">${t.tags.map(tg=>`<span class="tag">${tg}</span>`).join('')}</div>
+    <div class="thstats"><span>💬 ${t.r}</span><span>❤️ ${t.l}</span><span>🔖 ${t.s}</span></div></div>`;
+  });
+}
+
+function renderReadings(){
+  const cont=READS.filter(r=>r.cont);
+  const rest=READS.filter(r=>!r.cont);
+  document.getElementById('r-cont').innerHTML=cont.map(r=>`
+    <div class="rcard"><div class="raccent" style="background:${r.ac}"></div>
+    <div class="rreg" style="color:${r.rc}">${r.reg}</div>
+    <div class="rtitle">${r.title}</div><div class="rauthor">${r.auth}</div>
+    <div class="pbar"><div class="pfill" style="width:${r.prog}%;background:${r.ac}"></div></div>
+    <div class="rfoot"><div class="rlang">🌐 ${r.lang}</div><button class="rbtn">Continue →</button></div></div>`).join('');
+  document.getElementById('r-list').innerHTML=rest.map(r=>`
+    <div class="rcard"><div class="raccent" style="background:${r.ac}"></div>
+    <div class="rreg" style="color:${r.rc}">${r.reg}</div>
+    <div class="rtitle">${r.title}</div><div class="rauthor">${r.auth}</div>
+    <div class="rfoot"><div class="rlang">🌐 ${r.lang}</div><button class="rbtn">Read →</button></div></div>`).join('');
+}
+
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  const s=document.getElementById('screen-'+name);
+  if(s){s.classList.add('active');s.scrollTop=0;}
+  const nb=document.getElementById('nb-'+name);
+  if(nb)nb.classList.add('active');
+  if(name==='portfolio'){
+    const p=P[cur];
+    ['1','2','3','4','5'].forEach((n,i)=>setTimeout(()=>{document.getElementById('sf'+n).style.width=p.skills[i]+'%'},100+i*80));
+  }
+}
+
+function openModal(){document.getElementById('jmodal').classList.add('open');setTimeout(()=>document.getElementById('j-input').focus(),350)}
+function closeModal(){document.getElementById('jmodal').classList.remove('open');document.getElementById('j-input').value=''}
+function saveEntry(){
+  const t=document.getElementById('j-input').value.trim();
+  if(!t){closeModal();return;}
+  jcount++;
+  ['h-jn','pr-jn'].forEach(id=>document.getElementById(id).textContent=jcount);
+  document.getElementById('j-sub').textContent=`${jcount} entries · building identity`;
+  P[cur].entries=[{d:'Today · Just now',t:`"${t}"`,tags:['New Entry','Reflection']},...P[cur].entries];
+  renderEntries(P[cur].entries);
+  closeModal(); toast('Entry saved! ✓');
+}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function setEl(){}
+document.getElementById('jmodal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+</script>
+</body>
+</html>
